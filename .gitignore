@@ -1,0 +1,30 @@
+# Local Python environments and caches
+.venv/
+venv/
+env/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# IDE and operating-system files
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Local credentials
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Generated environment captures
+captures/
+
+# Private mentoring notes: keep local only
+MENTOR_LOG.md
