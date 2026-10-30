@@ -3,7 +3,7 @@ import cv2
 import gymnasium as gym
 import numpy as np
 
-import sys
+from pathlib import Path
 
 import tetris_gymnasium.envs  # Registers Tetris so gym.make() can find it.
 
@@ -11,6 +11,7 @@ import tetris_gymnasium.envs  # Registers Tetris so gym.make() can find it.
 ENVIRONMENT_SEED = 42
 ACTION_SEED = 123
 MAX_STEPS = 500
+CAPTURE_DIR = Path(__file__).resolve().parent / 'captures'
 
 
 def main() -> None:
@@ -23,6 +24,7 @@ def main() -> None:
         observation, info = env.reset(seed=ENVIRONMENT_SEED)
         env.action_space.seed(ACTION_SEED)
 
+        CAPTURE_DIR.mkdir(parents=True, exist_ok=True)
         print(f"Action space: {env.action_space}")
         print(f"Starting info: {info}")
         print("Starting observation fields:")
@@ -47,12 +49,13 @@ def main() -> None:
                 assert isinstance(frame, np.ndarray)
                 print(frame.shape, frame.dtype)
                 bgr_frame = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)
-                output_path = r"C:\MLproject\captures\step_0.png"
-                output_bi_path = r"C:\MLproject\captures\step_0.npy"
+                output_path = str(CAPTURE_DIR / 'step_0.png')
+                output_bi_path = CAPTURE_DIR / 'step_0.npy'
                 saved = cv2.imwrite(output_path, bgr_frame)
                 np.save(output_bi_path, observation["board"])
                 loaded_board = np.load(output_bi_path)
-                print(saved)
+                if not saved:
+                    raise OSError(f'Could not write image: {output_path}')
 
                 if np.array_equal(loaded_board, observation["board"]):
                     print(loaded_board.shape , loaded_board.dtype)
@@ -71,8 +74,8 @@ def main() -> None:
                 assert isinstance(frame, np.ndarray)
                 print(frame.shape, frame.dtype)
                 bgr_frame = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)
-                output_path = r"C:\MLproject\captures\step_5.png"
-                output_bi_path = r"C:\MLproject\captures\step_5.npy"
+                output_path = str(CAPTURE_DIR / 'step_5.png')
+                output_bi_path = CAPTURE_DIR / 'step_5.npy'
                 saved = cv2.imwrite(output_path, bgr_frame)
                 np.save(output_bi_path, observation["board"])
                 loaded_board = np.load(output_bi_path)
