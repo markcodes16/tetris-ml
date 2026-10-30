@@ -15,18 +15,16 @@ The script uses environment seed 42, action seed 123, and a 500-step cap.
 
 ## Local use
 
-The existing development environment is a Python virtual environment in `.venv`
-with Tetris Gymnasium, Gymnasium, NumPy, and OpenCV installed. From the project
-folder in PowerShell, run:
+Create a virtual environment and install the required packages from `requirements.txt`.
+From the project folder in PowerShell, run:
 
 ```powershell
-New-Item -ItemType Directory -Force captures
+py -3 -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
 .\.venv\Scripts\python.exe .\Controller.py
 ```
 
-The script currently saves captures to the absolute path `C:\MLproject\captures`.
-Running it from another location requires updating those output paths. Each run
-overwrites the same step-0 and step-5 files.
+Captures are saved to the automatically created `captures/` folder next to `Controller.py`, regardless of working directory. Each run overwrites the same step-0 and step-5 files.
 
 Virtual environments, editor settings, local credentials, and generated captures
 are excluded from version control.
